@@ -1,0 +1,20 @@
+# Render Blueprint: one Python web service serves both the API and the pre-built React client.
+services:
+  - type: web
+    name: bookleaf-author-portal-py
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips="*"
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
+      - key: APP_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ANTHROPIC_API_KEY
+        sync: false          # paste in the Render dashboard; never in the repo
+      - key: DB_PATH
+        value: ./data/bookleaf.db   # free tier disk is ephemeral: DB re-seeds on restart. Attach a disk for persistence.
