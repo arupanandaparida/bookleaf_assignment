@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+data/
+*.db
+*.db-wal
+*.db-shm
+.env
+client/node_modules/
+# client/dist is intentionally committed so the app runs without Node installed
